@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{tipoEvento.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{tipoEvento.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/tipoEventos/add}" th:text="#{tipoEvento.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${tipoEventos.empty}" th:text="#{tipoEvento.list.empty}" />
+            <div th:if="${!tipoEventos.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{tipoEvento.id.label}" scope="col" />
+                            <th th:text="#{tipoEvento.nombre.label}" scope="col" />
+                            <th th:text="#{tipoEvento.descripcion.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="tipoEvento : ${tipoEventos}">
+                            <td th:text="${tipoEvento.id}" />
+                            <td th:text="${tipoEvento.nombre}" />
+                            <td th:text="${tipoEvento.descripcion}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/tipoEventos/edit/{id}(id=${tipoEvento.id})}" th:text="#{tipoEvento.list.edit}" class="btn btn-sm btn-info" />
+                                    <form th:action="@{/tipoEventos/delete/{id}(id=${tipoEvento.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button th:text="#{tipoEvento.list.delete}" type="submit" class="btn btn-sm btn-danger" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{ticket.add.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{ticket.add.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/tickets}" th:text="#{ticket.add.back}" class="btn btn-secondary" />
+                </div>
+            </div>
+            <div th:replace="~{fragments/forms::globalErrors('ticket')}" />
+            <form th:action="${T(io.proyecto.ventas_evento.util.WebUtils).getRequest().requestURI}" method="post">
+                <div th:replace="~{fragments/forms::inputRow(object='ticket', field='codigoqr')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='ticket', field='fechaTicket', inputClass='js-datetimepicker')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='ticket', field='precioTotal')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='ticket', field='idCompra', type='select')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='ticket', field='eventoId', type='select')}" />
+                <input type="submit" th:value="#{ticket.add.headline}" class="btn btn-primary mt-4" />
+            </form>
+        </div>
+    </body>
+</html>

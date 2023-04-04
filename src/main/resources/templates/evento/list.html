@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{evento.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{evento.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/eventos/add}" th:text="#{evento.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${eventos.empty}" th:text="#{evento.list.empty}" />
+            <div th:if="${!eventos.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{evento.id.label}" scope="col" />
+                            <th th:text="#{evento.nombre.label}" scope="col" />
+                            <th th:text="#{evento.descripcion.label}" scope="col" />
+                            <th th:text="#{evento.fechaInicio.label}" scope="col" />
+                            <th th:text="#{evento.fechaFin.label}" scope="col" />
+                            <th th:text="#{evento.mediaUrl.label}" scope="col" />
+                            <th th:text="#{evento.idTipoEvento.label}" scope="col" />
+                            <th th:text="#{evento.idCategoria.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="evento : ${eventos}">
+                            <td th:text="${evento.id}" />
+                            <td th:text="${evento.nombre}" />
+                            <td th:text="${evento.descripcion}" />
+                            <td th:text="${evento.fechaInicio}" />
+                            <td th:text="${evento.fechaFin}" />
+                            <td th:text="${evento.mediaUrl}" />
+                            <td th:text="${evento.idTipoEvento}" />
+                            <td th:text="${evento.idCategoria}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/eventos/edit/{id}(id=${evento.id})}" th:text="#{evento.list.edit}" class="btn btn-sm btn-info" />
+                                    <form th:action="@{/eventos/delete/{id}(id=${evento.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button th:text="#{evento.list.delete}" type="submit" class="btn btn-sm btn-danger" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

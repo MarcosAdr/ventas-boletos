@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{evento.add.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{evento.add.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/eventos}" th:text="#{evento.add.back}" class="btn btn-secondary" />
+                </div>
+            </div>
+            <div th:replace="~{fragments/forms::globalErrors('evento')}" />
+            <form th:action="${T(io.proyecto.ventas_evento.util.WebUtils).getRequest().requestURI}" method="post">
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='nombre')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='descripcion')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='fechaInicio', inputClass='js-datetimepicker')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='fechaFin', inputClass='js-datetimepicker')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='mediaUrl')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='idTipoEvento', type='select')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='idCategoria', type='select')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='idUbicacion', type='select')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='idUsuario', type='select')}" />
+                <input type="submit" th:value="#{evento.add.headline}" class="btn btn-primary mt-4" />
+            </form>
+        </div>
+    </body>
+</html>

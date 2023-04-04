@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{ticket.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{ticket.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/tickets/add}" th:text="#{ticket.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${tickets.empty}" th:text="#{ticket.list.empty}" />
+            <div th:if="${!tickets.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{ticket.id.label}" scope="col" />
+                            <th th:text="#{ticket.codigoqr.label}" scope="col" />
+                            <th th:text="#{ticket.fechaTicket.label}" scope="col" />
+                            <th th:text="#{ticket.precioTotal.label}" scope="col" />
+                            <th th:text="#{ticket.idCompra.label}" scope="col" />
+                            <th th:text="#{ticket.eventoId.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="ticket : ${tickets}">
+                            <td th:text="${ticket.id}" />
+                            <td th:text="${ticket.codigoqr}" />
+                            <td th:text="${ticket.fechaTicket}" />
+                            <td th:text="${ticket.precioTotal}" />
+                            <td th:text="${ticket.idCompra}" />
+                            <td th:text="${ticket.eventoId}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/tickets/edit/{id}(id=${ticket.id})}" th:text="#{ticket.list.edit}" class="btn btn-sm btn-info" />
+                                    <form th:action="@{/tickets/delete/{id}(id=${ticket.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button th:text="#{ticket.list.delete}" type="submit" class="btn btn-sm btn-danger" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

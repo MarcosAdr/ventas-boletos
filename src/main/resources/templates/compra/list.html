@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{compra.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{compra.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/compras/add}" th:text="#{compra.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${compras.empty}" th:text="#{compra.list.empty}" />
+            <div th:if="${!compras.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{compra.id.label}" scope="col" />
+                            <th th:text="#{compra.cantidadEntradas.label}" scope="col" />
+                            <th th:text="#{compra.fechaCompra.label}" scope="col" />
+                            <th th:text="#{compra.idEvento.label}" scope="col" />
+                            <th th:text="#{compra.idUsuario.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="compra : ${compras}">
+                            <td th:text="${compra.id}" />
+                            <td th:text="${compra.cantidadEntradas}" />
+                            <td th:text="${compra.fechaCompra}" />
+                            <td th:text="${compra.idEvento}" />
+                            <td th:text="${compra.idUsuario}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/compras/edit/{id}(id=${compra.id})}" th:text="#{compra.list.edit}" class="btn btn-sm btn-info" />
+                                    <form th:action="@{/compras/delete/{id}(id=${compra.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button th:text="#{compra.list.delete}" type="submit" class="btn btn-sm btn-danger" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

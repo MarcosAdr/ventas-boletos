@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{ubicacion.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{ubicacion.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/ubicacions/add}" th:text="#{ubicacion.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${ubicacions.empty}" th:text="#{ubicacion.list.empty}" />
+            <div th:if="${!ubicacions.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{ubicacion.id.label}" scope="col" />
+                            <th th:text="#{ubicacion.direccion.label}" scope="col" />
+                            <th th:text="#{ubicacion.provincia.label}" scope="col" />
+                            <th th:text="#{ubicacion.ciudad.label}" scope="col" />
+                            <th th:text="#{ubicacion.latitud.label}" scope="col" />
+                            <th th:text="#{ubicacion.longitud.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="ubicacion : ${ubicacions}">
+                            <td th:text="${ubicacion.id}" />
+                            <td th:text="${ubicacion.direccion}" />
+                            <td th:text="${ubicacion.provincia}" />
+                            <td th:text="${ubicacion.ciudad}" />
+                            <td th:text="${ubicacion.latitud}" />
+                            <td th:text="${ubicacion.longitud}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/ubicacions/edit/{id}(id=${ubicacion.id})}" th:text="#{ubicacion.list.edit}" class="btn btn-sm btn-info" />
+                                    <form th:action="@{/ubicacions/delete/{id}(id=${ubicacion.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button th:text="#{ubicacion.list.delete}" type="submit" class="btn btn-sm btn-danger" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

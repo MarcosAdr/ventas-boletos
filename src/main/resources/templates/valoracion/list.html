@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{valoracion.list.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{valoracion.list.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/valoracions/add}" th:text="#{valoracion.list.createNew}" class="btn btn-primary ms-2" />
+                </div>
+            </div>
+            <div th:if="${valoracions.empty}" th:text="#{valoracion.list.empty}" />
+            <div th:if="${!valoracions.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th th:text="#{valoracion.id.label}" scope="col" />
+                            <th th:text="#{valoracion.comentario.label}" scope="col" />
+                            <th th:text="#{valoracion.calificacion.label}" scope="col" />
+                            <th th:text="#{valoracion.idEvento.label}" scope="col" />
+                            <th th:text="#{valoracion.idUsuario.label}" scope="col" />
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="valoracion : ${valoracions}">
+                            <td th:text="${valoracion.id}" />
+                            <td th:text="${valoracion.comentario}" />
+                            <td th:text="${valoracion.calificacion}" />
+                            <td th:text="${valoracion.idEvento}" />
+                            <td th:text="${valoracion.idUsuario}" />
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/valoracions/edit/{id}(id=${valoracion.id})}" th:text="#{valoracion.list.edit}" class="btn btn-sm btn-info" />
+                                    <form th:action="@{/valoracions/delete/{id}(id=${valoracion.id})}"
+                                            th:data-confirm-message="#{delete.confirm}" method="post" class="js-submit-confirm d-inline">
+                                        <button th:text="#{valoracion.list.delete}" type="submit" class="btn btn-sm btn-danger" />
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

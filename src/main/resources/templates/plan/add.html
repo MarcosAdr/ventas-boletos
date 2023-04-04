@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title th:text="#{plan.add.headline}" />
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 th:text="#{plan.add.headline}" class="flex-grow-1" />
+                <div>
+                    <a th:href="@{/plans}" th:text="#{plan.add.back}" class="btn btn-secondary" />
+                </div>
+            </div>
+            <div th:replace="~{fragments/forms::globalErrors('plan')}" />
+            <form th:action="${T(io.proyecto.ventas_evento.util.WebUtils).getRequest().requestURI}" method="post">
+                <div th:replace="~{fragments/forms::inputRow(object='plan', field='nombre')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='plan', field='precio')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='plan', field='descripcion')}" />
+                <input type="submit" th:value="#{plan.add.headline}" class="btn btn-primary mt-4" />
+            </form>
+        </div>
+    </body>
+</html>
